@@ -1,4 +1,4 @@
-const int ser=3,rc=4,src=5,reset=6;
+const int ser=3,rc=4,src=5;
 int binArr[8],position;
 char letters[]={'a','b','c','d','e','f','g','h','i','j','k','l','m',
                 'n','o','p','q','r','s','t','u','v','w','x','y','z',
@@ -48,10 +48,6 @@ void setup()
   pinMode(ser, OUTPUT);
   pinMode(src, OUTPUT);
   pinMode(rc, OUTPUT);
-  pinMode(reset, OUTPUT);
-  /*Se configura el puerto SRCL para que permita 
-  el correcto almacenamiento de datos en los CI*/
-  digitalWrite(reset,1);
   /*Inicializacion del puerto serial*/
   Serial.begin(9600);
 }
