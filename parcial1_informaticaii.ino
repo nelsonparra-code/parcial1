@@ -1,5 +1,6 @@
 const int ser=3,rc=4,src=5;
-int binArr[8],position;
+int binArr[8],position,qty;
+unsigned int time;
 char letters[]={'a','b','c','d','e','f','g','h','i','j','k','l','m',
                 'n','o','p','q','r','s','t','u','v','w','x','y','z',
                 '*','U','D','T','C','F','S','Z','O','N','H'};
@@ -40,9 +41,8 @@ int letValues[][8]={{66,102,102,60,36,36,60,24},//a
 					{60,102,102,60,60,102,102,60},//8
 					{60,126,6,6,126,102,102,60},//9
 					{24,36,66,0,36,36,36,0}};//cara feliz
-
-void setup()
-{
+int main(){
+  init();
   /*Se configuran los pines del Arduino para que funcionen como
   salida y asi ingresar valores a los CI*/
   pinMode(ser, OUTPUT);
@@ -50,52 +50,48 @@ void setup()
   pinMode(rc, OUTPUT);
   /*Inicializacion del puerto serial*/
   Serial.begin(9600);
-}
-
-void loop()
-{
-  int qty;
-  unsigned int time;
+  while(1){
+    Serial.println("Ingrese el tamaño de la secuencia a mostrar.");
+    Serial.print("(Considere el -1 como prueba de la matriz): ");
   
-  Serial.println("Ingrese el tamaño de la secuencia a mostrar.");
-  Serial.print("(Considere el -1 como prueba de la matriz): ");
-  
-  while(Serial.available()==0);
-  qty = Serial.parseInt();
-  Serial.println(qty);
-  
-  if(qty==-1){
-    verificacion();
-  }
-  else if(qty==1){
-    int letPos;
-    Serial.println("Ingrese imagen a mostrar: ");
     while(Serial.available()==0);
-    char caracter = Serial.read();
-    for(letPos=0;letPos<=36;letPos++){
-      if(*(letters+letPos)==caracter) break;
+    qty = Serial.parseInt();
+    Serial.println(qty);
+  
+    if(qty==-1){
+      verificacion();
     }
-    imagen(letValues[letPos]);
-  }
-  else{
-    
-    Serial.print("Ingrese el tiempo entre patrones (milisegundos): ");
-    while(Serial.available()==0);
-    time = Serial.parseInt();
-    Serial.print(time);
-    Serial.println("ms");
-    
-    Serial.println("Ingrese la secuencia a mostrar: ");
-    for(int count=1;count<=qty;count++){
+    else if(qty==1){
+      int letPos;
+      Serial.println("Ingrese imagen a mostrar: ");
       while(Serial.available()==0);
       char caracter = Serial.read();
-      if(count!=qty) Serial.print(caracter);
-      else Serial.println(caracter);
-      publik(&caracter, qty, time);
-    } 
+      for(letPos=0;letPos<=37;letPos++){
+        if(letters[letPos]==caracter) break;
+        else if(letPos==37) letPos=26;
+      }
+      imagen(letValues[letPos]);
+    }
+    else if(qty>1){
+    
+      Serial.print("Ingrese el tiempo entre patrones (milisegundos): ");
+      while(Serial.available()==0);
+      time = Serial.parseInt();
+      Serial.print(time);
+      Serial.println("ms");
+    
+      Serial.println("Ingrese la secuencia a mostrar: ");
+      for(int count=1;count<=qty;count++){
+        while(Serial.available()==0);
+        char caracter = Serial.read();
+        if(count!=qty) Serial.print(caracter);
+        else Serial.println(caracter);
+        publik(&caracter, qty, time);
+      } 
+    }
+    delay(500);
+    imagen(letValues[26]);
   }
-  delay(500);
-  imagen(letValues[26]);
 }
 
 /*Funcion que guarda en la memoria de los CI, el bit ingresado*/
@@ -122,7 +118,7 @@ recibiendo un arreglo de numeros decimales.*/
 void imagen(int *arrN)
 {
  for(int i=0;i<=7;i++){
-    int bit,n=*(arrN+i),binArr[8];
+    int bit,n=*(arrN+i),bitArr[8];
     for(int j=0;j<=7;j++){
       bit=n%2;
       binArr[j]=bit;
@@ -148,9 +144,9 @@ uno por uno en la matriz LED*/
 void publik(char *charArr, int n, int retardo)
 {
   for(int let=0;let<=(n-1);let++){
-    char seqLet=charArr[let];
+    char aux=charArr[let];
     for(int letPos=0;letPos<=36;letPos++){
-      if(letters[letPos]==seqLet){
+      if(letters[letPos]==aux){
         position=letPos;
         imagen(letValues[letPos]);
       }

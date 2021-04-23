@@ -1,0 +1,53 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{listings}
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+\usepackage{cite}
+
+\begin{document}
+
+\begin{titlepage}
+    \begin{center}
+        \vspace*{1cm}
+            
+        \Huge
+        \textbf{Manual de Uso}
+            
+        \vspace{0.5cm}
+        \LARGE
+        Matriz LED 8x8
+            
+        \vspace{1.5cm}
+            
+        \textbf{Nelson Fernando Parra Guardia}
+            
+        \vfill
+            
+        \vspace{0.8cm}
+            
+        \Large
+        Despartamento de Ingeniería Electrónica y Telecomunicaciones\\
+        Universidad de Antioquia\\
+        Medellín\\
+        Abril de 2021
+            
+    \end{center}
+\end{titlepage}
+
+\newpage
+\section{Instrucciones}
+El programa contiene las letras del abecedario, los números del 1 al 9 y una carita feliz para su uso y representación como imágen en la matriz. Para mostrar alguna letra, el dato ingresado debe ser la letra en \textbf{minúscula}, para los números del 1 al 9, se debe ingresar U (para el 1), D (para el 2), T (para el 3), C (para el 4), F (para el 5), S (para el 6), Z (para el 7), O (para el 8), N (para el 9) \textbf{(nótese que las letras están en mayúscula)} y para la carita feliz, se debe ingresar H \textbf{(nótese que está en mayúscula)}. Adicionalmente, el programa cuenta con espacios, para su uso se debe ingresar un * (asterísco).
+\par Además, al momento de especificar el tamaño del patrón de imágenes, \textbf{se deben contar los espacios}. Como ejemplo, supongamos que queremos mostrar el patrón "HOLA COMO ESTAS 23":
+
+\begin{enumerate}
+    \item El tamaño de ese patrón es 18.
+    \item Se debe ingresar el tiempo entre cada imágen a mostrar.
+    \item El patrón es ingresado de la siguiente manera: \emph{hola*como*estas*DT}
+\end{enumerate}
+
+\par También, el programa tiene un modo para probar la matriz, esta función hace que todos los LEDs se prendan por 500 milisegundos. Para utilizarla, debe ingresar en la primera parte, cuando se le pregunta el tamaño, un -1.
+\par Por último, si solo quiere mostrar una imágen, ingrese 1 cuando el programa le pida el tamaño y, seguidamente, ingrese la imágen deseada tomando en cuenta la descripción anterior.
+
+\end{document}
